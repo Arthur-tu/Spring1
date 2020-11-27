@@ -1,5 +1,6 @@
 package com.geekbrains.july.market.services;
 
+import com.geekbrains.july.market.entities.Category;
 import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.exceptions.ProductNotFoundException;
 import com.geekbrains.july.market.repositories.ProductsRepository;
@@ -8,17 +9,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.geekbrains.july.market.repositories.CategoryRepository;
 
 import java.util.List;
 
 @Service
 public class ProductsService {
     private ProductsRepository productsRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     public void setProductsRepository(ProductsRepository productsRepository) {
         this.productsRepository = productsRepository;
+    }
+
+    @Autowired
+    public void setCategoryRepository(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     public Product saveOrUpdate(Product product) {
@@ -32,6 +39,8 @@ public class ProductsService {
     public List<Product> findAll() {
         return productsRepository.findAll();
     }
+
+    public List<Category> findAllCategories(){ return categoryRepository.findAll();}
 
     public Page<Product> findAll(Specification<Product> spec, Integer page) {
         if (page < 1L) { page = 1;}

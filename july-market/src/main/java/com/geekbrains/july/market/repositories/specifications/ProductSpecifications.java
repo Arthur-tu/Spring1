@@ -15,4 +15,9 @@ public class ProductSpecifications {
     public static Specification<Product> containsString(String subString) {
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), '%' + subString.toLowerCase() + '%');
     }
+
+    public static Specification<Product> categoryIdIsEqualTo(Long id) {
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("category"), id);
+    }
 }

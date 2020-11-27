@@ -5,11 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class JulyMarketApplication {
-	// Домашнее задание:
-	// +1. Добавить кнопку сброса фильтра
-	// +2. Реализовать поиск товара по части названия (может пригодиться оператор LIKE)
-	// +3. Деактивируйте кнопки назад и вперед если находитесь на первой или последней странице соответственно
-
+	// + 1) Добавить категории товаров (создать сущность category и связь с товаром)
+	// + 2) Сделать поисковый фильтр по одной категории
 	public static void main(String[] args) {
 		SpringApplication.run(JulyMarketApplication.class, args);
 	}

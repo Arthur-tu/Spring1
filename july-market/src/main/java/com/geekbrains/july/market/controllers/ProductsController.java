@@ -1,17 +1,13 @@
 package com.geekbrains.july.market.controllers;
-
+import com.geekbrains.july.market.entities.Category;
 import com.geekbrains.july.market.entities.Product;
-import com.geekbrains.july.market.repositories.specifications.ProductSpecifications;
 import com.geekbrains.july.market.services.ProductsService;
 import com.geekbrains.july.market.utils.ProductFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -30,6 +26,7 @@ public class ProductsController {
         ProductFilter productFilter = new ProductFilter(requestParams);
         Page<Product> products = productsService.findAll(productFilter.getSpec(), pageNumber);
         model.addAttribute("products", products);
+        model.addAttribute("categories", productsService.findAllCategories());
         model.addAttribute("filterDef", productFilter.getFilterDefinition().toString());
         return "all_products";
     }

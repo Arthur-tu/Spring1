@@ -30,5 +30,10 @@ public class ProductFilter {
             spec = spec.and(ProductSpecifications.containsString(title));
             filterDefinition.append("&title=").append(title);
         }
+        if (map.containsKey("category") && !map.get("category").isEmpty()) {
+            Long id = Long.parseLong(map.get("category"));
+            spec = spec.and(ProductSpecifications.categoryIdIsEqualTo(id));
+            filterDefinition.append("&category=").append(id);
+        }
     }
 }

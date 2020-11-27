@@ -2,7 +2,6 @@ package com.geekbrains.july.market.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
@@ -21,9 +20,14 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    public Product(Long id, String title, int price) {
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Product(Long id, String title, int price, Category category) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.category = category;
     }
 }
