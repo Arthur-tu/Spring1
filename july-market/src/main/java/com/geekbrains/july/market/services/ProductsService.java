@@ -1,7 +1,7 @@
 package com.geekbrains.july.market.services;
 
-import com.geekbrains.july.market.entities.Category;
 import com.geekbrains.july.market.entities.Product;
+import com.geekbrains.july.market.entities.dtos.ProductDto;
 import com.geekbrains.july.market.exceptions.ProductNotFoundException;
 import com.geekbrains.july.market.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,23 +9,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import com.geekbrains.july.market.repositories.CategoryRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class ProductsService {
     private ProductsRepository productsRepository;
-    private CategoryRepository categoryRepository;
 
     @Autowired
     public void setProductsRepository(ProductsRepository productsRepository) {
         this.productsRepository = productsRepository;
-    }
-
-    @Autowired
-    public void setCategoryRepository(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
     }
 
     public Product saveOrUpdate(Product product) {
@@ -40,10 +34,26 @@ public class ProductsService {
         return productsRepository.findAll();
     }
 
-    public List<Category> findAllCategories(){ return categoryRepository.findAll();}
-
     public Page<Product> findAll(Specification<Product> spec, Integer page) {
-        if (page < 1L) { page = 1;}
+        if (page < 1L) {
+            page = 1;
+        }
         return productsRepository.findAll(spec, PageRequest.of(page - 1, 10));
+    }
+
+    public void deleteAll() {
+        productsRepository.deleteAll();
+    }
+
+    public void deleteById(Long id) {
+        productsRepository.deleteById(id);
+    }
+
+    public boolean existsById(Long id) {
+        return productsRepository.existsById(id);
+    }
+
+    public List<ProductDto> getDtoData() {
+        return productsRepository.findAllBy();
     }
 }

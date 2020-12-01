@@ -1,8 +1,11 @@
 package com.geekbrains.july.market.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -20,14 +23,21 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany
+    @JoinTable(name = "products_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categories;
 
-    public Product(Long id, String title, int price, Category category) {
+    public Product(Long id, String title, int price) {
         this.id = id;
         this.title = title;
         this.price = price;
-        this.category = category;
     }
+
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
+
+    public int getPrice() { return price; }
 }

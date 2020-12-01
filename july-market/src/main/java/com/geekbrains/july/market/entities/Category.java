@@ -1,7 +1,9 @@
 package com.geekbrains.july.market.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,26 +11,29 @@ import java.util.List;
 @Table(name = "categories")
 @Data
 @NoArgsConstructor
-
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "title")
     private String title;
-    @OneToMany(mappedBy = "category")
+
+    @ManyToMany
+    @JoinTable(name = "products_categories",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @JsonBackReference
     private List<Product> products;
 
-    public Category (Long id, String title, List<Product> products) {
+    public Category(Long id, String title) {
         this.id = id;
         this.title = title;
-        this.products = products;
     }
 
-    public String getStringId() { return id.toString(); }
-
     @Override
-    public String toString() { return String.format("Category [id = %d, title = %s]", id, title); }
+    public String toString() {
+        return title;
+    }
 }
-

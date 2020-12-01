@@ -1,35 +1,20 @@
+drop table if exists products cascade;
+create table products (id bigserial, title varchar(255), description varchar(5000), price int, primary key(id));
+insert into products
+(title, description, price) values
+('Cheese', 'Fresh cheese', 320),
+('Milk', 'Fresh milk', 80),
+('Apples', 'Fresh apples', 80),
+('Bread', 'Fresh bread', 30);
+
 drop table if exists categories cascade;
 create table categories (id bigserial, title varchar(255), primary key(id));
-insert into categories (title) values ('Category 1'), ('Category 2'), ('Category 3'), ('Category 4'),
-('Category 5');
+insert into categories
+(title) values
+('Food'),
+('Devices');
 
-drop table if exists products cascade;
-
-create table products (id bigserial, category_id bigserial, title varchar(255), description varchar(5000),
-price int, primary key(id), FOREIGN KEY (category_id)  REFERENCES categories(id));
-
-insert into products (title, description, price, category_id) values
-('Cheese', 'Fresh cheese', 320, 1),
-('Milk', 'Fresh milk', 80, 2),
-('Apples', 'Fresh apples', 80, 3),
-('Bread', 'Fresh bread', 30, 4),
-('A1', '', 1, 5),
-('A2', '', 2, 1),
-('A3', '', 3, 2),
-('A4', '', 4, 3),
-('A5', '', 5, 4),
-('A6', '', 6, 5),
-('A7', '', 7, 1),
-('A8', '', 8, 2),
-('A9', '', 9, 3),
-('A10', '', 10, 4),
-('A11', '', 11, 5),
-('A12', '', 12, 1),
-('A13', '', 13, 2),
-('A14', '', 14, 3),
-('A15', '', 15, 4),
-('A16', '', 16, 4),
-('A17', '', 17, 4),
-('A18', '', 18, 4),
-('A19', '', 19, 1),
-('A20', '', 20, 2);
+drop table if exists products_categories cascade;
+create table products_categories (product_id bigint not null, category_id bigint not null, primary key(product_id, category_id),
+foreign key (product_id) references products(id), foreign key (category_id) references categories(id));
+insert into products_categories (product_id, category_id) values (1, 1), (2, 1), (3, 1), (4, 2);

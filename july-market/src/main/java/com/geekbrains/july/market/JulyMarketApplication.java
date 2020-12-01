@@ -5,8 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class JulyMarketApplication {
-	// + 1) Добавить категории товаров (создать сущность category и связь с товаром)
-	// + 2) Сделать поисковый фильтр по одной категории
+	// Домашнее задание:
+	// 1. Реализуйте корзину в виде бина (корзина не сущность, а обычный Спринг бин)
+	// 2. Необходимо добавлять товары в корзину, удалять их оттуда, просматривать
+	// список товаров в корзине
+
 	public static void main(String[] args) {
 		SpringApplication.run(JulyMarketApplication.class, args);
 	}
