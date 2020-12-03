@@ -1,9 +1,8 @@
 package com.geekbrains.july.market.entities;
 
 import lombok.Data;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class Product {
     @JoinTable(name = "products_categories",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JsonBackReference
     private List<Category> categories;
 
     public Product(Long id, String title, int price) {
